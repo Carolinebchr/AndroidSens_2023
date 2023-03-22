@@ -40,7 +40,10 @@ public class PlayerController : MonoBehaviour
         ApplyCalibration();
 
         transform.rotation = Quaternion.Slerp(transform.rotation,_rawGyroRotation.rotation,_smoothing);
+
+        dataSaved = dataSaved + "\nTime: " + System.DateTime.Now.ToString() + " | Position: " + transform.position.ToString() + " |";
     }
+
 
     private IEnumerator Start()
     {
@@ -96,14 +99,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        Time.fixedDeltaTime = 1 / 10;
-    }
-
-    private void FixedUpdate()
-    {
-        dataSaved = dataSaved + "\nTime: " + System.DateTime.Now.ToString() + " | Position: " + transform.position.ToString() + " |";
-    }
+   
+        
 }
 
