@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class TouchManager : MonoBehaviour
 {
@@ -10,6 +12,9 @@ public class TouchManager : MonoBehaviour
     private InputAction touchPositionAction;
 
     private InputAction touchPressAction;
+
+    [SerializeField] private GameObject player;
+
 
     private void Awake()
     {
@@ -33,8 +38,21 @@ public class TouchManager : MonoBehaviour
 
     private void TouchPressed(InputAction.CallbackContext context)
     {
-        float value = context.ReadValue<float>();
-        Debug.Log(value);
+
+        Vector3 position = Camera.main.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
+        position.z = player.transform.position.z;
+        player.transform.position = position;
+    }
+
+    private void Update()
+    {
+        if (touchPositionAction.WasPerformedThisFrame())
+        {
+            Vector3 position = Camera.main.ScreenToWorldPoint(touchPositionAction.ReadValue<Vector2>());
+            position.z = player.transform.position.z;
+            player.transform.position = position;
+        }
+
     }
 
 }
