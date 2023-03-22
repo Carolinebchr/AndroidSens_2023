@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -22,6 +24,9 @@ public class PlayerController : MonoBehaviour
 
     //settings
     private float _smoothing = 0.1f;
+
+
+    public string dataSaved;
 
     private void Update()
     {
@@ -77,6 +82,28 @@ public class PlayerController : MonoBehaviour
     {
         enabled = true;
         StartCoroutine(CalibrateYAngle());
+    }
+
+    public void SaveData()
+    {
+        Directory.CreateDirectory(Application.streamingAssetsPath + "/DataLog/");
+        string TxtName = Application.streamingAssetsPath + "/DataLog/" + "Data" + ".txt";
+        
+
+        if (!File.Exists(TxtName))
+        {
+            File.WriteAllText(TxtName, dataSaved);
+        }
+    }
+
+    private void Awake()
+    {
+        Time.fixedDeltaTime = 1 / 10;
+    }
+
+    private void FixedUpdate()
+    {
+        dataSaved = dataSaved + "\nTime: " + System.DateTime.Now.ToString() + " | Position: " + transform.position.ToString() + " |";
     }
 }
 
