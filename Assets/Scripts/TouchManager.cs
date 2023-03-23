@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class TouchManager : MonoBehaviour
 {
+    //Script was made by following Samyam Tutorial on "How to use TOUCH with the Input System in Unity"
     private PlayerInput playerInput;
 
     private InputAction touchPositionAction;

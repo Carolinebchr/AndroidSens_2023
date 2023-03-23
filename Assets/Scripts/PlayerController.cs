@@ -7,6 +7,8 @@ using System;
 
 public class PlayerController : MonoBehaviour
 {
+    //Script was made by following Lurple Tutorial on "Unity - how to make a player controller with gyroscope and accelerometer"
+
     //movement
     [SerializeField] private float speed = 3.3f;
     private float rotSpeed = 90f;
@@ -40,8 +42,6 @@ public class PlayerController : MonoBehaviour
         ApplyCalibration();
 
         transform.rotation = Quaternion.Slerp(transform.rotation,_rawGyroRotation.rotation,_smoothing);
-
-        dataSaved = dataSaved + "\nTime: " + System.DateTime.Now.ToString() + " | Position: " + transform.position.ToString() + " |";
     }
 
 
@@ -87,6 +87,9 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(CalibrateYAngle());
     }
 
+    /// <summary>
+    /// save the string to a file in Data folder under streamingAsset Folder 
+    /// </summary>
     public void SaveData()
     {
         Directory.CreateDirectory(Application.streamingAssetsPath + "/DataLog/");
@@ -99,7 +102,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   
-        
+    private void FixedUpdate()
+    {
+        //Every 1s the dataSaved string is updated to hold the new values as well as the old values as a string 
+        //this is for when we call the SavedData() the data.txt will contain from the start up until you call the function.
+        dataSaved = dataSaved + "Time: " + System.DateTime.Now.ToString() + " | \n Rotation: " + _rawGyroRotation.rotation.ToString() + "| \n Postition: " + transform.position.ToString() + " |\n\n\n";
+    }
+
 }
+
+
+
 
