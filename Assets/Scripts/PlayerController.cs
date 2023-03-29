@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
 
     private Transform _rawGyroRotation;
     private float _tempSmoothing;
-
     private int filenum = 0;
 
     //settings
