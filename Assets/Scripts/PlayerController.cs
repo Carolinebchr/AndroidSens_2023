@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     private Transform _rawGyroRotation;
     private float _tempSmoothing;
 
+    private int filenum = 0;
 
     //settings
     private float _smoothing = 0.1f;
@@ -42,6 +43,11 @@ public class PlayerController : MonoBehaviour
         ApplyCalibration();
 
         transform.rotation = Quaternion.Slerp(transform.rotation,_rawGyroRotation.rotation,_smoothing);
+<<<<<<< Updated upstream
+=======
+
+        dataSaved = dataSaved + "\nTime: ;" + System.DateTime.Now.ToString() + " ; Acceleration: ;" + Input.acceleration.x.ToString();
+>>>>>>> Stashed changes
     }
 
 
@@ -93,11 +99,17 @@ public class PlayerController : MonoBehaviour
     public void SaveData()
     {
         Directory.CreateDirectory(Application.streamingAssetsPath + "/DataLog/");
-        string TxtName = Application.streamingAssetsPath + "/DataLog/" + "Data" + ".txt";
-        
+        string TxtName = Application.streamingAssetsPath + "/DataLog/" + "Data" + "("+ filenum.ToString() + ")" + ".csv";
 
+        
         if (!File.Exists(TxtName))
         {
+            File.WriteAllText(TxtName, dataSaved);
+        }
+        else
+        {
+            filenum++;
+            TxtName = Application.streamingAssetsPath + "/DataLog/" + "Data" + "(" + filenum.ToString() + ")" + ".csv";
             File.WriteAllText(TxtName, dataSaved);
         }
     }
